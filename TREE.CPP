@@ -1,7 +1,4 @@
 #include<iostream.h>
-#include<conio.h>
-#include<stdio.h>
-#include<stdlib.h>
 #include<queue.h>
 
 struct node
@@ -9,57 +6,33 @@ struct node
   int info;
   node *left;
   node *right;
- }*root;
+ };
 
 int max(int value1,int value2)
 {
   return((value1>value2)?value1:value2);
  }
 
-void insert(node *tree,node *newnode)
+node* insert(node* temp,int data)
 {
-  if(root==NULL)
+  if(temp==NULL)
   {
-    root=new node;
-    root->info=newnode->info;
-    root->left=NULL;
-    root->right=NULL;
-    return;
+    temp=new node;
+    temp->info=data;
+    temp->left=NULL;
+    temp->right=NULL;
+    return temp;
     }
-  if(tree->info==newnode->info)
+  if(data<=temp->info)
   {
-    cout<<"Element already in tree\n";
-    return;
-   }
-  if((tree->info)>(newnode->info))
-  {
-    if(tree->left!=NULL)
-    {
-      insert(tree->left,newnode);
-     }
-     else
-     {
-      tree->left=newnode;
-      (tree->left)->left=NULL;
-      (tree->left)->right=NULL;
-      return;
-      }
+    temp->left=insert(temp->left,data);	  
     }
-    else
-    {
-     if(tree->right!=NULL)
-     {
-       insert(tree->right,newnode);
-      }
-     else
-     {
-       tree->right=newnode;
-       (tree->right)->left=NULL;
-       (tree->right)->right=NULL;
-	return;
-      }
+  else
+  {	  
+    temp->right=insert(temp->right,data);
      }
-  }
+   return temp;
+ }
   void display(node *ptr,int level)
   {
      int i;
@@ -90,7 +63,7 @@ void insert(node *tree,node *newnode)
   {
     if(root==NULL)
     {
-      return -1;
+      return 0;
      }
     return max(findheight(root->left),findheight(root->right))+1;
    }
@@ -141,52 +114,36 @@ void insert(node *tree,node *newnode)
 
  void preorder(node *temp)
 {
-  if(root==NULL)
-  {
-   cout<<"Tree Empty\n";
-   return;
-   }
-  if(temp!=NULL)
-  {
+  if(temp==NULL)
+  return;
+  
    cout<<temp->info<<"  ";
    preorder(temp->left);
    preorder(temp->right);
-   }
  }
  void inorder(node *temp)
 {
-  if(root==NULL)
-  {
-   cout<<"Tree Empty\n";
+  if(temp==NULL)
    return;
-   }
-  if(temp!=NULL)
-  {
+  
     inorder(temp->left);
     cout<<temp->info<<"  ";
-    inorder(temp->right);
-   }
+    inorder(temp->right); 
  }
  void postorder(node *temp)
 {
-  if(root==NULL)
- {
-   cout<<"Tree Empty\n";
+  if(temp==NULL)
    return;
-  }
-  if(temp!=NULL)
- {
+  
    postorder(temp->left);
    postorder(temp->right);
-   cout<<temp->info<<"  ";
-  }
+   cout<<temp->info<<"  "; 
  }
- void main()
+ int main()
 {
-  int choice,max,min,height;
-  root=NULL;
+  int choice,data,max,min,height;
+  node* root=NULL;
   clrscr();
-  node *temp;
   cout<<"BINARY TREE\n";
   while(1)
   {
@@ -195,9 +152,8 @@ void insert(node *tree,node *newnode)
     if(choice==1)
     {
       cout<<"Enter the element to be inserted\n";
-      temp=new node;
-      cin>>temp->info;
-      insert(root,temp);
+      cin>>data;
+      root=insert(root,data);
      }
     else if(choice==3)
     display(root,1);
@@ -243,7 +199,7 @@ void insert(node *tree,node *newnode)
     else
     cout<<"Enter correct choice\n";
     }
-   getch();
+   return 0;
  }
 
 
