@@ -1,12 +1,11 @@
 #include<iostream.h>
-#include<conio.h>
 #include<stdio.h>
 
 struct node
 {
   int info;
   node *link;
-} *top,*top1,*temp;
+}*top;
 
 int count=0;
 void push(int data)
@@ -19,7 +18,7 @@ void push(int data)
    }
   else
   {
-     temp=new node;
+     node* temp=new node;
      temp->info=data;
      temp->link=top;
      top=temp;
@@ -34,7 +33,7 @@ void pop()
     cout<<"Stack Empty\n";
     return;
    }
-  top1=top;
+  node* top1=top;
   top=top->link;
   cout<<"Information poped "<<top1->info<<endl;
   delete top1;
@@ -47,13 +46,13 @@ void pop()
     cout<<"Stack empty"<<endl;
     return;
    }
-  top1=top;
+  node* top1=top;
   while(top1!=NULL)
  {
    cout<<top1->info<<" ";
    top1=top1->link;
   }
-   return;
+
  }
 
  void destroy()
@@ -63,19 +62,19 @@ void pop()
     cout<<"Stack doesn't exist\n";
     return;
    }
-  while(top!=NULL)
+  node* top1=top;
+   while(top!=NULL)
   {
-    top1=top;
-    top=top->link;
-    delete(top1);
+     top=top->link;
+     delete(top1);
+     top1=top;
    }
    cout<<"Stack destroyed\n";
  }
 
- void main()
+ int main()
 {
   int choice,data;
-  clrscr();
   cout<<"Program to implement a stack\n";
   while(1)
  {
@@ -88,7 +87,7 @@ void pop()
     cin>>data;
     push(data);
    }
-  else if(choice==2)
+    else if(choice==2)
     pop();
   else if(choice==3)
     display();
@@ -99,7 +98,7 @@ void pop()
   else
     cout<<"Enter correct choice\n";
  }
-  getch();
+  return 0;
 }
 
 
